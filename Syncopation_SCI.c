@@ -199,13 +199,13 @@ interrupt void SCI_SerialPortReceiveISR(void)
 //    case V_LOOP_PI:     v_loop_pi(arg_2, arg_3);        break;
 
 
-    case DAB_PHS_INC:   DabPhs_INC();       break;
-    case DAB_PHS_DEC:   DabPhs_DEC();       break;
-    case DAB_PHS_SET:   DabPhs_SET(arg_1);  break;
-    case DAB_PI:        DabPI(arg_2,arg_3); break;
-    case DAB_IREF:      DabIref(arg_2);     break;
-    case DAB_CTRL_EN:   DabCtrlEn();        break;
-    case DAB_CTRL_DIS:  DabCtrlDis();       break;
+//    case DAB_PHS_INC:   DabPhs_INC();       break;
+//    case DAB_PHS_DEC:   DabPhs_DEC();       break;
+//    case DAB_PHS_SET:   DabPhs_SET(arg_1);  break;
+//    case DAB_PI:        DabPI(arg_2,arg_3); break;
+//    case DAB_IREF:      DabIref(arg_2);     break;
+//    case DAB_CTRL_EN:   DabCtrlEn();        break;
+//    case DAB_CTRL_DIS:  DabCtrlDis();       break;
     default: break;
     }
 

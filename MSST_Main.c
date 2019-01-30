@@ -26,6 +26,7 @@ void main(void) {
 	EDIS;
 
     MSSTGpioConfig();
+    GpioDataRegs.GPACLEAR.bit.GPIO18 = 1;  // Not prepared yet.
     CPU_LED_BIT = 0;
 
     DINT;
@@ -36,8 +37,6 @@ void main(void) {
     AdcInit();
     PwmInit();
     Pwm_DIS();
-
-    DabPri_EN();
 
     CpuTimerInit();
     PieCtrlRegs.PIECTRL.bit.ENPIE = 1;  // Enable the PIE block
@@ -75,8 +74,8 @@ extern Uint16 log_limit;
 
 extern float Dab_Idc;
 extern float Vdc;
-extern float Idc_filter_slow;
-extern float Vdc_filter_slow;
+//extern float Idc_filter_slow;
+//extern float Vdc_filter_slow;
 
 Uint16 log_send_count = 0;
 
@@ -102,8 +101,8 @@ void deadloop()
 
         SCI_UpdatePacketFloat(0, Dab_Idc);
         SCI_UpdatePacketFloat(1, Vdc);
-        SCI_UpdatePacketFloat(2, Idc_filter_slow);
-        SCI_UpdatePacketFloat(3, Vdc_filter_slow);
+//        SCI_UpdatePacketFloat(2, Idc_filter_slow);
+//        SCI_UpdatePacketFloat(3, Vdc_filter_slow);
 
         SCI_UpdatePacketInt16(0, dab_prd);
         SCI_UpdatePacketInt16(1, dab_phs);

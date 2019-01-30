@@ -18,33 +18,36 @@ void MSSTGpioConfig(void)
     GpioCtrlRegs.GPAMUX1.bit.GPIO10 = 1;
     GpioCtrlRegs.GPAGMUX1.bit.GPIO11 = 0;   // PWM6B -- PWM2B
     GpioCtrlRegs.GPAMUX1.bit.GPIO11 = 1;
-    GpioCtrlRegs.GPAGMUX1.bit.GPIO12 = 0;   // PWM7A -- PWM3A
-    GpioCtrlRegs.GPAMUX1.bit.GPIO12 = 1;
-    GpioCtrlRegs.GPAGMUX1.bit.GPIO13 = 0;   // PWM7B -- PWM3B
-    GpioCtrlRegs.GPAMUX1.bit.GPIO13 = 1;
-    GpioCtrlRegs.GPAGMUX1.bit.GPIO14 = 0;   // PWM8A -- PWM4A
-    GpioCtrlRegs.GPAMUX1.bit.GPIO14 = 1;
-    GpioCtrlRegs.GPAGMUX1.bit.GPIO15 = 0;   // PWM8B -- PWM4B
-    GpioCtrlRegs.GPAMUX1.bit.GPIO15 = 1;
+
+//    GpioCtrlRegs.GPAGMUX1.bit.GPIO12 = 0;   // PWM7A -- PWM3A
+//    GpioCtrlRegs.GPAMUX1.bit.GPIO12 = 1;
+//    GpioCtrlRegs.GPAGMUX1.bit.GPIO13 = 0;   // PWM7B -- PWM3B
+//    GpioCtrlRegs.GPAMUX1.bit.GPIO13 = 1;
+//    GpioCtrlRegs.GPAGMUX1.bit.GPIO14 = 0;   // PWM8A -- PWM4A
+//    GpioCtrlRegs.GPAMUX1.bit.GPIO14 = 1;
+//    GpioCtrlRegs.GPAGMUX1.bit.GPIO15 = 0;   // PWM8B -- PWM4B
+//    GpioCtrlRegs.GPAMUX1.bit.GPIO15 = 1;
 
     //DAB Current Calibration output configuration
-//    GpioCtrlRegs.GPADIR.bit.GPIO12 = 1;
-//    GpioCtrlRegs.GPADIR.bit.GPIO13 = 1;
-//    GpioCtrlRegs.GPADIR.bit.GPIO14 = 1;
-//    GpioCtrlRegs.GPADIR.bit.GPIO15 = 1;
-//    GpioDataRegs.GPASET.bit.GPIO12 = 1;
-//    GpioDataRegs.GPASET.bit.GPIO13 = 1;
-//    GpioDataRegs.GPASET.bit.GPIO14 = 1;
-//    GpioDataRegs.GPASET.bit.GPIO15 = 1;
+    GpioDataRegs.GPACLEAR.bit.GPIO12 = 1;
+    GpioDataRegs.GPACLEAR.bit.GPIO13 = 1;
+    GpioDataRegs.GPACLEAR.bit.GPIO14 = 1;
+    GpioDataRegs.GPACLEAR.bit.GPIO15 = 1;
+    GpioCtrlRegs.GPADIR.bit.GPIO12 = 1;
+    GpioCtrlRegs.GPADIR.bit.GPIO13 = 1;
+    GpioCtrlRegs.GPADIR.bit.GPIO14 = 1;
+    GpioCtrlRegs.GPADIR.bit.GPIO15 = 1;
 
 
     GpioCtrlRegs.GPAGMUX2.bit.GPIO16 = 1;   // PWM9A -- Sync_output
     GpioCtrlRegs.GPAMUX2.bit.GPIO16 = 1;
 
-    GpioCtrlRegs.GPAGMUX2.bit.GPIO18 = 0;   // SCITXDB
-    GpioCtrlRegs.GPAMUX2.bit.GPIO18 = 2;
-    GpioCtrlRegs.GPAGMUX2.bit.GPIO19 = 0;   // SCIRXDB
-    GpioCtrlRegs.GPAMUX2.bit.GPIO19 = 2;
+    GpioCtrlRegs.GPADIR.bit.GPIO18 = 1;
+
+//    GpioCtrlRegs.GPAGMUX2.bit.GPIO18 = 0;   // SCITXDB
+//    GpioCtrlRegs.GPAMUX2.bit.GPIO18 = 2;
+//    GpioCtrlRegs.GPAGMUX2.bit.GPIO19 = 0;   // SCIRXDB
+//    GpioCtrlRegs.GPAMUX2.bit.GPIO19 = 2;
 
 
     GpioCtrlRegs.GPAPUD.bit.GPIO20 = 1;     // Unused pin

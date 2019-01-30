@@ -24,7 +24,7 @@
 #define STATUS_FAIL          0
 #define STATUS_SUCCESS       1
 
-//#define _FLASH
+#define _FLASH
 
 //
 // Functions that will be run from RAM need to be assigned to a different

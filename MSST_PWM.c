@@ -42,7 +42,6 @@ void Epwm2Init()
     EPwm2Regs.DBFED.bit.DBFED = PWM_DB-1;
     EPwm2Regs.DBCTL.bit.IN_MODE = 0;
     EPwm2Regs.DBCTL.bit.POLSEL = 2;
-    EPwm2Regs.DBCTL.bit.OUT_MODE = 3;
 
     EPwm2Regs.CMPA.bit.CMPA = 2000;
 
@@ -51,7 +50,9 @@ void Epwm2Init()
     EALLOW;
     EPwm2Regs.TZCTL.bit.TZA = TZ_FORCE_LO;
     EPwm2Regs.TZCTL.bit.TZB = TZ_FORCE_LO;
+    EPwm2Regs.TZFRC.bit.OST = 1;
     EDIS;
+    EPwm2Regs.DBCTL.bit.OUT_MODE = 3;
 }
 
 void Epwm6Init()
@@ -68,7 +69,6 @@ void Epwm6Init()
     EPwm6Regs.DBFED.bit.DBFED = PWM_DB-1;
     EPwm6Regs.DBCTL.bit.IN_MODE = 0;
     EPwm6Regs.DBCTL.bit.POLSEL = 2;
-    EPwm6Regs.DBCTL.bit.OUT_MODE = 3;
     EPwm6Regs.DBCTL.bit.OUTSWAP = 3;
 
     EPwm6Regs.CMPA.bit.CMPA = 2000;
@@ -79,7 +79,9 @@ void Epwm6Init()
     EALLOW;
     EPwm6Regs.TZCTL.bit.TZA = TZ_FORCE_LO;
     EPwm6Regs.TZCTL.bit.TZB = TZ_FORCE_LO;
+    EPwm6Regs.TZFRC.bit.OST = 1;
     EDIS;
+    EPwm6Regs.DBCTL.bit.OUT_MODE = 3;
 }
 
 void Epwm7Init()
@@ -97,7 +99,6 @@ void Epwm7Init()
     EPwm7Regs.DBFED.bit.DBFED = PWM_DB-1;
     EPwm7Regs.DBCTL.bit.IN_MODE = 0;
     EPwm7Regs.DBCTL.bit.POLSEL = 2;
-    EPwm7Regs.DBCTL.bit.OUT_MODE = 3;
 
     EPwm7Regs.CMPA.bit.CMPA = 1000;
 
@@ -106,7 +107,9 @@ void Epwm7Init()
     EALLOW;
     EPwm7Regs.TZCTL.bit.TZA = TZ_FORCE_LO;
     EPwm7Regs.TZCTL.bit.TZB = TZ_FORCE_LO;
+    EPwm7Regs.TZFRC.bit.OST = 1;
     EDIS;
+    EPwm7Regs.DBCTL.bit.OUT_MODE = 3;
 }
 
 void Epwm8Init()
@@ -124,7 +127,6 @@ void Epwm8Init()
     EPwm8Regs.DBFED.bit.DBFED = PWM_DB-1;
     EPwm8Regs.DBCTL.bit.IN_MODE = 0;
     EPwm8Regs.DBCTL.bit.POLSEL = 2;
-    EPwm8Regs.DBCTL.bit.OUT_MODE = 3;
     EPwm8Regs.DBCTL.bit.OUTSWAP = 3;
 
     EPwm8Regs.CMPA.bit.CMPA = 1000;
@@ -134,7 +136,9 @@ void Epwm8Init()
     EALLOW;
     EPwm8Regs.TZCTL.bit.TZA = TZ_FORCE_LO;
     EPwm8Regs.TZCTL.bit.TZB = TZ_FORCE_LO;
+    EPwm8Regs.TZFRC.bit.OST = 1;
     EDIS;
+    EPwm8Regs.DBCTL.bit.OUT_MODE = 3;
 }
 
 void Epwm9Init()
@@ -304,11 +308,11 @@ extern float Dab_Idc_ref;
 extern float Dab_Idc_buf;
 void DabPhs_SET(int16 arg)
 {
-    if((dab_phs > -600) && (dab_phs < 600))
-    {
-        dab_phs = arg;
-        log_state = 1;
-        dab_state = 1;
-        Dab_Idc_ref = Dab_Idc_buf;
-    }
+//    if((dab_phs > -600) && (dab_phs < 600))
+//    {
+//        dab_phs = arg;
+//        log_state = 1;
+//        dab_state = 1;
+//        Dab_Idc_ref = Dab_Idc_buf;
+//    }
 }
