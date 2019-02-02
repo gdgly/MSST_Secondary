@@ -158,8 +158,11 @@ float Dab_Idc_buf = 0;
 float Dab_Idc_error = 0;
 float Dab_Idc_inte = 0;
 
-float Dab_kp = 8;
-float Dab_ki = 0.7;
+float Dab_kp = 10;
+float Dab_ki = 0.1;
+
+//float Dab_kp = 3;
+//float Dab_ki = 0.5;
 
 extern Uint16 dab_prd;
 
@@ -216,17 +219,17 @@ __interrupt void ControlLoop(void)
 
     if(GpioDataRegs.GPADAT.bit.GPIO19)
     {
-        GpioDataRegs.GPASET.bit.GPIO12 = 1;
-        GpioDataRegs.GPACLEAR.bit.GPIO13 = 1;
-        GpioDataRegs.GPACLEAR.bit.GPIO14 = 1;
-        GpioDataRegs.GPASET.bit.GPIO15 = 1;
+        GpioDataRegs.GPASET.bit.GPIO2 = 1;
+        GpioDataRegs.GPACLEAR.bit.GPIO3 = 1;
+        GpioDataRegs.GPACLEAR.bit.GPIO10 = 1;
+        GpioDataRegs.GPASET.bit.GPIO11 = 1;
     }
     else
     {
-        GpioDataRegs.GPACLEAR.bit.GPIO12 = 1;
-        GpioDataRegs.GPACLEAR.bit.GPIO13 = 1;
-        GpioDataRegs.GPACLEAR.bit.GPIO14 = 1;
-        GpioDataRegs.GPACLEAR.bit.GPIO15 = 1;
+        GpioDataRegs.GPACLEAR.bit.GPIO2 = 1;
+        GpioDataRegs.GPACLEAR.bit.GPIO2 = 1;
+        GpioDataRegs.GPACLEAR.bit.GPIO10 = 1;
+        GpioDataRegs.GPACLEAR.bit.GPIO11 = 1;
     }
 
 
@@ -277,8 +280,7 @@ void dab_normal()
     else
     {
         float Vdc_pri = 0.2965626611 * (Duty-50) + 0.0219840284;
-        Dab_Idc_ref = Vdc_pri - Vdc;    // Virtual resistance is 1 ohm.
-
+        Dab_Idc_ref = 0.5 * (Vdc - Vdc_pri);    // Virtual resistance is 1 ohm.
         if(Dab_Idc_ref > 14)
             Dab_Idc_ref = 14;
         if(Dab_Idc_ref < -14)

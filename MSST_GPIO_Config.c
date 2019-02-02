@@ -10,33 +10,43 @@
 void MSSTGpioConfig(void)
 {
     EALLOW;
-    GpioCtrlRegs.GPAGMUX1.bit.GPIO2 = 0;    // PWM2A -- PWM1A
-    GpioCtrlRegs.GPAMUX1.bit.GPIO2 = 1;
-    GpioCtrlRegs.GPAGMUX1.bit.GPIO3 = 0;    // PWM2B -- PWM1B
-    GpioCtrlRegs.GPAMUX1.bit.GPIO3 = 1;
-    GpioCtrlRegs.GPAGMUX1.bit.GPIO10 = 0;   // PWM6A -- PWM2A
-    GpioCtrlRegs.GPAMUX1.bit.GPIO10 = 1;
-    GpioCtrlRegs.GPAGMUX1.bit.GPIO11 = 0;   // PWM6B -- PWM2B
-    GpioCtrlRegs.GPAMUX1.bit.GPIO11 = 1;
+//    GpioCtrlRegs.GPAGMUX1.bit.GPIO2 = 0;    // PWM2A -- PWM1A
+//    GpioCtrlRegs.GPAMUX1.bit.GPIO2 = 1;
+//    GpioCtrlRegs.GPAGMUX1.bit.GPIO3 = 0;    // PWM2B -- PWM1B
+//    GpioCtrlRegs.GPAMUX1.bit.GPIO3 = 1;
+//    GpioCtrlRegs.GPAGMUX1.bit.GPIO10 = 0;   // PWM6A -- PWM2A
+//    GpioCtrlRegs.GPAMUX1.bit.GPIO10 = 1;
+//    GpioCtrlRegs.GPAGMUX1.bit.GPIO11 = 0;   // PWM6B -- PWM2B
+//    GpioCtrlRegs.GPAMUX1.bit.GPIO11 = 1;
 
-//    GpioCtrlRegs.GPAGMUX1.bit.GPIO12 = 0;   // PWM7A -- PWM3A
-//    GpioCtrlRegs.GPAMUX1.bit.GPIO12 = 1;
-//    GpioCtrlRegs.GPAGMUX1.bit.GPIO13 = 0;   // PWM7B -- PWM3B
-//    GpioCtrlRegs.GPAMUX1.bit.GPIO13 = 1;
-//    GpioCtrlRegs.GPAGMUX1.bit.GPIO14 = 0;   // PWM8A -- PWM4A
-//    GpioCtrlRegs.GPAMUX1.bit.GPIO14 = 1;
-//    GpioCtrlRegs.GPAGMUX1.bit.GPIO15 = 0;   // PWM8B -- PWM4B
-//    GpioCtrlRegs.GPAMUX1.bit.GPIO15 = 1;
+    GpioCtrlRegs.GPAGMUX1.bit.GPIO12 = 0;   // PWM7A -- PWM3A
+    GpioCtrlRegs.GPAMUX1.bit.GPIO12 = 1;
+    GpioCtrlRegs.GPAGMUX1.bit.GPIO13 = 0;   // PWM7B -- PWM3B
+    GpioCtrlRegs.GPAMUX1.bit.GPIO13 = 1;
+    GpioCtrlRegs.GPAGMUX1.bit.GPIO14 = 0;   // PWM8A -- PWM4A
+    GpioCtrlRegs.GPAMUX1.bit.GPIO14 = 1;
+    GpioCtrlRegs.GPAGMUX1.bit.GPIO15 = 0;   // PWM8B -- PWM4B
+    GpioCtrlRegs.GPAMUX1.bit.GPIO15 = 1;
 
     //DAB Current Calibration output configuration
-    GpioDataRegs.GPACLEAR.bit.GPIO12 = 1;
-    GpioDataRegs.GPACLEAR.bit.GPIO13 = 1;
-    GpioDataRegs.GPACLEAR.bit.GPIO14 = 1;
-    GpioDataRegs.GPACLEAR.bit.GPIO15 = 1;
-    GpioCtrlRegs.GPADIR.bit.GPIO12 = 1;
-    GpioCtrlRegs.GPADIR.bit.GPIO13 = 1;
-    GpioCtrlRegs.GPADIR.bit.GPIO14 = 1;
-    GpioCtrlRegs.GPADIR.bit.GPIO15 = 1;
+//    GpioDataRegs.GPACLEAR.bit.GPIO12 = 1;
+//    GpioDataRegs.GPACLEAR.bit.GPIO13 = 1;
+//    GpioDataRegs.GPACLEAR.bit.GPIO14 = 1;
+//    GpioDataRegs.GPACLEAR.bit.GPIO15 = 1;
+//    GpioCtrlRegs.GPADIR.bit.GPIO12 = 1;
+//    GpioCtrlRegs.GPADIR.bit.GPIO13 = 1;
+//    GpioCtrlRegs.GPADIR.bit.GPIO14 = 1;
+//    GpioCtrlRegs.GPADIR.bit.GPIO15 = 1;
+
+    //Load Switch
+    GpioDataRegs.GPACLEAR.bit.GPIO2 = 1;
+    GpioDataRegs.GPACLEAR.bit.GPIO3 = 1;
+    GpioDataRegs.GPACLEAR.bit.GPIO10 = 1;
+    GpioDataRegs.GPACLEAR.bit.GPIO11 = 1;
+    GpioCtrlRegs.GPADIR.bit.GPIO2 = 1;
+    GpioCtrlRegs.GPADIR.bit.GPIO3 = 1;
+    GpioCtrlRegs.GPADIR.bit.GPIO10 = 1;
+    GpioCtrlRegs.GPADIR.bit.GPIO11 = 1;
 
 
     GpioCtrlRegs.GPAGMUX2.bit.GPIO16 = 1;   // PWM9A -- Sync_output
