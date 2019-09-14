@@ -37,51 +37,33 @@ void DataLog_Logging(Uint16 index, float ch1, float ch2, float ch3, float ch4)
     }
 }
 
-extern int16 pwm_counter;
-//extern Uint16 rect_state;
-//extern Uint16 dab_state;
+//extern Uint16 trigger_state;
 
 void DataLog_SendSample(Uint16 index)
 {
-    if(DataLog_index < DATA_LOG_SIZE)
-    {
-        SCI_UpdatePacketFloat(0, Data_Ch1[index]);
-        SCI_UpdatePacketFloat(1, Data_Ch2[index]);
-        SCI_UpdatePacketFloat(2, Data_Ch3[index]);
-        SCI_UpdatePacketFloat(3, Data_Ch4[index]);
-
-        SCI_UpdatePacketInt16(0, 1);
-//        int16 converter_state = (rect_state & 0xfffc) | ((dab_state & 0xfffc) << 2);
-//        SCI_UpdatePacketInt16(1, converter_state);
-        SCI_SendPacket();
-    }
+    SCI_UpdatePacketFloat(0, Data_Ch1[index]);
+    SCI_UpdatePacketFloat(1, Data_Ch2[index]);
+    SCI_UpdatePacketFloat(2, Data_Ch3[index]);
+    SCI_UpdatePacketFloat(3, Data_Ch4[index]);
+    SCI_SendPacket();
 }
 
 void DataLog_StartToSend(Uint16 length)
 {
+    DataLog_index = 0;
     DataLog_send_size = length;
     DataLog_state = 1;
 }
 
 void DataLog_ISR()
 {
-//    if(DataLog_state == 1)
-//    {
-//        DataLog_SendSample();
-//    }
+    if(DataLog_state == 1)
+    {
+        DataLog_SendSample(0);
+    }
 }
 
 Uint16 getDataLogSize()
 {
     return DATA_LOG_SIZE;
-}
-
-Uint16 getDataLogState()
-{
-    return DataLog_state;
-}
-
-void DataLogReset()
-{
-    DataLog_state = 0;
 }

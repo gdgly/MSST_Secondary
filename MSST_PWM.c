@@ -180,6 +180,25 @@ void ECapInit()
     ECap1Regs.ECCTL1.bit.CTRRST2 = 1;
     ECap1Regs.ECCTL1.bit.CAP1POL = 1;
     ECap1Regs.ECCTL2.bit.TSCTRSTOP = 1;
+//    ECap1Regs.ECCTL2.bit.STOP_WRAP = 1; // Only use Event 0 and Event 1
+
+    InputXbarRegs.INPUT8SELECT = 19; // GPIO-19 to ECAP2
+    ECap2Regs.ECCTL1.bit.CAPLDEN = 1;
+    ECap2Regs.ECCTL1.bit.CTRRST4 = 1;
+    ECap2Regs.ECCTL1.bit.CAP3POL = 1;
+    ECap2Regs.ECCTL1.bit.CTRRST2 = 1;
+    ECap2Regs.ECCTL1.bit.CAP1POL = 1;
+    ECap2Regs.ECCTL2.bit.TSCTRSTOP = 1;
+    ECap2Regs.ECCTL2.bit.STOP_WRAP = 1; // Only use Event 0 and Event 1
+
+    InputXbarRegs.INPUT9SELECT = 73; // GPIO-19 to ECAP2
+    ECap3Regs.ECCTL1.bit.CAPLDEN = 1;
+    ECap3Regs.ECCTL1.bit.CTRRST4 = 1;
+    ECap3Regs.ECCTL1.bit.CAP3POL = 1;
+    ECap3Regs.ECCTL1.bit.CTRRST2 = 1;
+    ECap3Regs.ECCTL1.bit.CAP1POL = 1;
+    ECap3Regs.ECCTL2.bit.TSCTRSTOP = 1;
+    ECap3Regs.ECCTL2.bit.STOP_WRAP = 1; // Only use Event 0 and Event 1
     EDIS;
 }
 

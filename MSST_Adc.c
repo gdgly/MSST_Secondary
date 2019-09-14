@@ -130,6 +130,8 @@ void Adc_B_Init()
 // Feedback signals
 Uint16 Prd = 0;
 Uint16 Duty = 0;
+Uint16 Duty_Vac_sec = 0;
+Uint16 Duty_I_d_ref = 0;
 
 #define FAULT_RELEASE   GpioDataRegs.GPASET.bit.GPIO18 = 1
 #define FAULT_TRIP      GpioDataRegs.GPACLEAR.bit.GPIO18 = 1
@@ -168,6 +170,63 @@ extern Uint16 dab_prd;
 
 extern void Dab_Update();
 
+// I_loop_variables
+#define TS 2e-5
+
+//float i_kp = 40;
+//float i_kr = 100;
+float i_kp = 20;
+float i_kr = 50;
+float i_sogi_x1 = 0;
+float i_sogi_x2 = 0;
+float i_dc_offset_inte = 0;
+float i_sogi_error;
+float i_omega_h1_T;
+// End of I_loop_variables
+
+#pragma CODE_SECTION(current_loop, ".TI.ramfunc");
+float current_loop(float Iac_ref, float Iac, float Freq)
+{
+    i_omega_h1_T = Freq * TS;
+
+    float i_sogi_h1_x1_n;
+    float i_sogi_h1_x2_n;
+
+    i_sogi_error = -Iac_ref + Iac;
+
+    i_sogi_h1_x1_n = __cospuf32(i_omega_h1_T) * i_sogi_x1 - __sinpuf32(i_omega_h1_T) * i_sogi_x2 + TS * 377 * i_sogi_error;
+    i_sogi_h1_x2_n = __sinpuf32(i_omega_h1_T) * i_sogi_x1 + __cospuf32(i_omega_h1_T) * i_sogi_x2;
+
+    i_sogi_x1 = i_sogi_h1_x1_n;
+    i_sogi_x2 = i_sogi_h1_x2_n;
+
+    float Vac_ref = i_kp * i_sogi_error + i_kr * i_sogi_x1;
+
+    return Vac_ref;
+}
+
+// Variables for low voltage AC
+Uint16 inverter_state = 0;
+float Vac_sec = 0;
+float Theta_sec = 0;
+float Freq_sec = 60;
+float Vac_sec_amp = 0;
+float Vac_sec_ref = 0;
+float Iac_sec_ref = 0;
+
+extern float MSST_PLL(float Vac, float *Freq, float *Vac_amp);
+
+Uint16 log_state = 0;
+Uint16 log_index = 0;
+Uint16 log_pos_index = 0;
+Uint16 log_limit = 4000;
+Uint16 event_index = 0;
+Uint16 send_state = 0;
+Uint16 send_start = 0;
+Uint16 send_index = 0;
+
+Uint16 inverter_state_buf = 0;
+
 #pragma CODE_SECTION(ControlLoop, ".TI.ramfunc");
 __interrupt void ControlLoop(void)
 {
@@ -185,8 +244,17 @@ __interrupt void ControlLoop(void)
 
     Prd = (ECap1Regs.CAP2 + ECap1Regs.CAP4) >> 1;
     Duty = (ECap1Regs.CAP1 + ECap1Regs.CAP3) >> 1;
-    Dab_Idc = -0.0076785131 * I_DC_1 + 15.4710225296;
-    Vdc = 0.2965626611 * V_DC + 0.0219840284;
+
+    if(Duty)
+    // L1_SEC
+//    Dab_Idc = -0.0076785131 * I_DC_1 + 15.4710225296;
+//    Vdc = 0.2965626611 * V_DC + 0.0219840284;
+    // L2_SEC
+//    Dab_Idc = -0.0075655198 * I_DC_1 + 15.5273564490;
+//    Vdc = 0.2934196545 * V_DC - 0.5341295089;
+    // L3_SEC
+    Dab_Idc = -0.0075653312 * I_DC_1 + 15.4387459332;
+    Vdc = 0.2954279377 * V_DC - 0.1407289198;
 
     if((dab_state > 0) && ((Iac < -15)||(Iac > 15)))
         Status |= (1 << 1);
@@ -217,19 +285,67 @@ __interrupt void ControlLoop(void)
 
     Dab_Update();
 
-    if(GpioDataRegs.GPADAT.bit.GPIO19)
+
+    Iac = -0.0253515732 * I_AC_2 + 52.1520863497;
+
+
+    Duty_Vac_sec = ECap3Regs.CAP1;
+    Duty_I_d_ref = ECap2Regs.CAP1;
+    Vac_sec = ((float)Duty_Vac_sec - 2000.0) * 0.25;
+    Theta_sec = MSST_PLL(Vac_sec, &Freq_sec, &Vac_sec_amp);
+
+    inverter_state_buf = inverter_state;
+
+    if((Duty_I_d_ref < 50) || (Vac_sec_amp < 100) || Status)
     {
-        GpioDataRegs.GPASET.bit.GPIO2 = 1;
-        GpioDataRegs.GPACLEAR.bit.GPIO3 = 1;
-        GpioDataRegs.GPACLEAR.bit.GPIO10 = 1;
-        GpioDataRegs.GPASET.bit.GPIO11 = 1;
+        inverter_state = 0;
+        Rectifier_DIS();
     }
     else
     {
-        GpioDataRegs.GPACLEAR.bit.GPIO2 = 1;
-        GpioDataRegs.GPACLEAR.bit.GPIO2 = 1;
-        GpioDataRegs.GPACLEAR.bit.GPIO10 = 1;
-        GpioDataRegs.GPACLEAR.bit.GPIO11 = 1;
+        inverter_state = 1;
+        Iac_sec_ref = ((float)Duty_I_d_ref - 2000.0) * 0.02 * __cospuf32(Theta_sec);
+        Vac_sec_ref = current_loop(Iac_sec_ref, Iac, Freq_sec);
+        float duty = Vac_sec_ref / Vdc;
+        RectDuty_SET(duty);
+        Rectifier_EN();
+    }
+
+    switch(log_state)
+    {
+    case 0: {
+        DataLog_Logging(log_index, Vac_sec, Vac_sec_ref, Iac, Vdc);
+        log_index++;
+        if(log_index>=1000)
+            log_index = 0;
+
+        if((inverter_state == 1) && (inverter_state_buf == 0))
+        {
+            event_index = log_index;
+            log_state = 1;
+        }
+        break;
+    }
+    case 1: {
+        DataLog_Logging(log_index, Vac_sec, Vac_sec_ref, Iac, Vdc);
+        log_index++;
+        if(log_index>=1000)
+            log_index = 0;
+
+        log_pos_index++;
+        if(log_pos_index >= 800)
+        {
+            log_state = 2;
+            log_pos_index = 0;
+        }
+        break;
+    }
+    case 2: {
+        break;
+    }
+    default: {
+        break;
+    }
     }
 
 

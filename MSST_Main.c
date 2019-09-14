@@ -79,35 +79,38 @@ extern float Vdc;
 
 Uint16 log_send_count = 0;
 
+extern Uint16 log_state;
+extern Uint16 log_index;
+
 #pragma CODE_SECTION(deadloop, ".TI.ramfunc");
 void deadloop()
 {
     while(1)
     {
-//        if(log_state == 2)
-//        {
-//            DataLog_SendSample(log_index);
-//            log_send_count++;
-//            log_index++;
-//            if(log_index>=log_limit)
-//                log_index = 0;
-//            if(log_send_count >= log_limit)
-//            {
-//                log_send_count = 0;
-//                log_index = 0;
-//                log_state = 0;
-//            }
-//        }
+        if(log_state == 2)
+        {
+            DataLog_SendSample(log_index);
+            log_send_count++;
+            log_index++;
+            if(log_index>=1000)
+                log_index = 0;
+            if(log_send_count >= 1000)
+            {
+                log_send_count = 0;
+                log_index = 0;
+                log_state = 0;
+            }
+        }
 
-        SCI_UpdatePacketFloat(0, Dab_Idc);
-        SCI_UpdatePacketFloat(1, Vdc);
+//        SCI_UpdatePacketFloat(0, Dab_Idc);
+//        SCI_UpdatePacketFloat(1, Vdc);
 //        SCI_UpdatePacketFloat(2, Idc_filter_slow);
 //        SCI_UpdatePacketFloat(3, Vdc_filter_slow);
 
-        SCI_UpdatePacketInt16(0, dab_prd);
-        SCI_UpdatePacketInt16(1, dab_phs);
-        SCI_UpdatePacketInt16(2, dab_state);
-        SCI_SendPacket();
+//        SCI_UpdatePacketInt16(0, dab_prd);
+//        SCI_UpdatePacketInt16(1, dab_phs);
+//        SCI_UpdatePacketInt16(2, dab_state);
+//        SCI_SendPacket();
         DELAY_US(4000);
 
     }

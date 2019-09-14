@@ -10,14 +10,14 @@
 void MSSTGpioConfig(void)
 {
     EALLOW;
-//    GpioCtrlRegs.GPAGMUX1.bit.GPIO2 = 0;    // PWM2A -- PWM1A
-//    GpioCtrlRegs.GPAMUX1.bit.GPIO2 = 1;
-//    GpioCtrlRegs.GPAGMUX1.bit.GPIO3 = 0;    // PWM2B -- PWM1B
-//    GpioCtrlRegs.GPAMUX1.bit.GPIO3 = 1;
-//    GpioCtrlRegs.GPAGMUX1.bit.GPIO10 = 0;   // PWM6A -- PWM2A
-//    GpioCtrlRegs.GPAMUX1.bit.GPIO10 = 1;
-//    GpioCtrlRegs.GPAGMUX1.bit.GPIO11 = 0;   // PWM6B -- PWM2B
-//    GpioCtrlRegs.GPAMUX1.bit.GPIO11 = 1;
+    GpioCtrlRegs.GPAGMUX1.bit.GPIO2 = 0;    // PWM2A -- PWM1A
+    GpioCtrlRegs.GPAMUX1.bit.GPIO2 = 1;
+    GpioCtrlRegs.GPAGMUX1.bit.GPIO3 = 0;    // PWM2B -- PWM1B
+    GpioCtrlRegs.GPAMUX1.bit.GPIO3 = 1;
+    GpioCtrlRegs.GPAGMUX1.bit.GPIO10 = 0;   // PWM6A -- PWM2A
+    GpioCtrlRegs.GPAMUX1.bit.GPIO10 = 1;
+    GpioCtrlRegs.GPAGMUX1.bit.GPIO11 = 0;   // PWM6B -- PWM2B
+    GpioCtrlRegs.GPAMUX1.bit.GPIO11 = 1;
 
     GpioCtrlRegs.GPAGMUX1.bit.GPIO12 = 0;   // PWM7A -- PWM3A
     GpioCtrlRegs.GPAMUX1.bit.GPIO12 = 1;
@@ -39,18 +39,20 @@ void MSSTGpioConfig(void)
 //    GpioCtrlRegs.GPADIR.bit.GPIO15 = 1;
 
     //Load Switch
-    GpioDataRegs.GPACLEAR.bit.GPIO2 = 1;
-    GpioDataRegs.GPACLEAR.bit.GPIO3 = 1;
-    GpioDataRegs.GPACLEAR.bit.GPIO10 = 1;
-    GpioDataRegs.GPACLEAR.bit.GPIO11 = 1;
-    GpioCtrlRegs.GPADIR.bit.GPIO2 = 1;
-    GpioCtrlRegs.GPADIR.bit.GPIO3 = 1;
-    GpioCtrlRegs.GPADIR.bit.GPIO10 = 1;
-    GpioCtrlRegs.GPADIR.bit.GPIO11 = 1;
+//    GpioDataRegs.GPACLEAR.bit.GPIO2 = 1;
+//    GpioDataRegs.GPACLEAR.bit.GPIO3 = 1;
+//    GpioDataRegs.GPACLEAR.bit.GPIO10 = 1;
+//    GpioDataRegs.GPACLEAR.bit.GPIO11 = 1;
+//    GpioCtrlRegs.GPADIR.bit.GPIO2 = 1;
+//    GpioCtrlRegs.GPADIR.bit.GPIO3 = 1;
+//    GpioCtrlRegs.GPADIR.bit.GPIO10 = 1;
+//    GpioCtrlRegs.GPADIR.bit.GPIO11 = 1;
 
 
-    GpioCtrlRegs.GPAGMUX2.bit.GPIO16 = 1;   // PWM9A -- Sync_output
-    GpioCtrlRegs.GPAMUX2.bit.GPIO16 = 1;
+//    GpioCtrlRegs.GPAGMUX2.bit.GPIO16 = 1;   // PWM9A -- Sync_output
+//    GpioCtrlRegs.GPAMUX2.bit.GPIO16 = 1;
+
+    GpioCtrlRegs.GPADIR.bit.GPIO16 = 1;
 
     GpioCtrlRegs.GPADIR.bit.GPIO18 = 1;
 
@@ -89,11 +91,11 @@ void MSSTGpioConfig(void)
     GpioCtrlRegs.GPCPUD.bit.GPIO66 = 1;     // Unused pin
     GpioCtrlRegs.GPCPUD.bit.GPIO69 = 1;     // Unused pin
 
-    GpioCtrlRegs.GPCDIR.bit.GPIO70 = 1;     // CPU_LED
-//    GpioCtrlRegs.GPBDIR.bit.GPIO41 = 1;     // CPU_LED
+//    GpioCtrlRegs.GPCDIR.bit.GPIO70 = 1;     // CPU_LED
+    GpioCtrlRegs.GPBDIR.bit.GPIO41 = 1;     // CPU_LED
 
     GpioCtrlRegs.GPCPUD.bit.GPIO72 = 1;     // Unused pin
-    GpioCtrlRegs.GPCPUD.bit.GPIO73 = 1;     // Unused pin
+//    GpioCtrlRegs.GPCPUD.bit.GPIO73 = 1;     // Unused pin
     GpioCtrlRegs.GPCPUD.bit.GPIO78 = 1;     // Unused pin
     GpioCtrlRegs.GPCPUD.bit.GPIO84 = 1;     // Unused pin
     GpioCtrlRegs.GPCPUD.bit.GPIO86 = 1;     // Unused pin
